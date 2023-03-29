@@ -33,7 +33,7 @@ export default function FilterByCategories() {
     } = event;
     if (filteredProducts.length) {
       setFilteredProducts(
-        filteredProducts.filter((product) =>
+        products.filter((product) =>
           event.target.value.includes(product.category)
         )
       );
@@ -46,16 +46,19 @@ export default function FilterByCategories() {
       setFilteredProducts(products);
     }
   }, [handleChange]);
+
   const [categories, setCategories] = useState([]);
+
   useEffect(() => {
     axios
       .get("https://fakestoreapi.com/products/categories")
       .then((response) => setCategories(response.data));
   }, []);
+
   return (
     <div>
-      <FormControl sx={{ margin: "15px 0px", width: "100%" }}>
-        <InputLabel id="demo-multiple-checkbox-label">Category</InputLabel>
+      <FormControl sx={{ margin: "55px 0px 10px 0 ", width: "100%" }}>
+        <InputLabel id="demo-multiple-checkbox-label">category</InputLabel>
         <Select
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"

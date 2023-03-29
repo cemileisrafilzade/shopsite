@@ -2,20 +2,22 @@ import React, { createContext, useEffect, useState } from "react";
 
 export const AppContextProvider = (props) => {
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [loading, setLoading] = useState(false);
   const fetchData = () => {
+    setLoading(true);
     fetch("https://fakestoreapi.com/products")
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         setProducts(data);
-        setFilteredProducts(data);
       });
   };
 
   useEffect(() => {
     fetchData();
+    setLoading(false);
   }, []);
 
   const contextValues = {
@@ -23,6 +25,7 @@ export const AppContextProvider = (props) => {
     setProducts,
     filteredProducts,
     setFilteredProducts,
+    loading,
   };
   return (
     <AppContext.Provider value={contextValues}>

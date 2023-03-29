@@ -27,6 +27,7 @@ function Product({ product }) {
     Transition: Slide,
   });
 
+  const { loading } = useContext(AppContext);
   const navigate = useNavigate();
   useEffect(() => {
     setRate(Math.round(product.rating.rate));
@@ -47,7 +48,6 @@ function Product({ product }) {
       });
     }
   };
-  const loading = 0;
   return (
     <Card
       onClick={() => navigate(`product-info/${product.id}`)}
