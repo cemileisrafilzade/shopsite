@@ -19,7 +19,7 @@ import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutl
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context";
 
-function Product({ product }) {
+function ProductCard({ product }) {
   const [rate, setRate] = useState(4);
   const [fav, setFav] = useState(false);
   const [state, setState] = React.useState({
@@ -27,7 +27,7 @@ function Product({ product }) {
     Transition: Slide,
   });
 
-  const { loading } = useContext(AppContext);
+  const { loading, setFavIds, favIds } = useContext(AppContext);
   const navigate = useNavigate();
   useEffect(() => {
     setRate(Math.round(product.rating.rate));
@@ -46,8 +46,29 @@ function Product({ product }) {
       setState({
         open: true,
       });
+      if (!favIds.includes(product.id)) {
+        let temp = [];
+        temp.push(product.id);
+        setFavIds([...favIds, ...temp]);
+        localStorage.setItem("favIds", JSON.stringify([...favIds, ...temp]));
+      }
+    } else if (fav) {
+      if (favIds.includes(product.id)) {
+        setFavIds(favIds.filter((id) => id !== product.id));
+        localStorage.setItem(
+          "favIds",
+          JSON.stringify(favIds.filter((id) => id !== product.id))
+        );
+      }
     }
   };
+  useEffect(() => {
+    // Retrieve the favIds array from local storage
+    const storedFavIds = JSON.parse(localStorage.getItem("favIds"));
+    if (storedFavIds) {
+      setFavIds(storedFavIds);
+    }
+  }, []);
   return (
     <Card
       onClick={() => navigate(`product-info/${product.id}`)}
@@ -111,9 +132,6 @@ function Product({ product }) {
                 <Rating readOnly value={rate} />
                 <p>{product.rating.count}</p>
               </span>
-
-              {/* <h5>{product.category}</h5> */}
-              {/* <p>{product.description}</p> */}
             </span>
             <Divider />
             <Button
@@ -139,4 +157,4 @@ function Product({ product }) {
   );
 }
 
-export default Product;
+export default ProductCard;

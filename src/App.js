@@ -1,17 +1,15 @@
 import "./App.css";
-import { useEffect, useState } from "react";
-import Products from "./pages/Products";
-import { Box, Grid } from "@mui/material";
 import { AppContextProvider } from "./context";
 import Layout from "./helpers/Layout";
+import AllRoutes from "./helpers/routes";
 
 function App() {
   return (
     <AppContextProvider>
       <Layout>
-        <Box className="App">
-          <Products />
-        </Box>
+        <div className="App">
+          <AllRoutes />
+        </div>
       </Layout>
     </AppContextProvider>
   );

@@ -1,22 +1,22 @@
-import styled from "@emotion/styled";
-import { Grid, Paper, Skeleton } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import React, { useContext, useEffect } from "react";
-import Product from "../components/product";
+import FilterSidebar from "../components/FilterSidebar";
+import ProductCard from "../components/productCard";
 import { AppContext } from "../context";
-
-function Products({}) {
+import "../styles/main.scss";
+function Products() {
   const { filteredProducts } = useContext(AppContext);
   return (
-    <Grid
-      container
-      sx={{ padding: 5 }}
-      spacing={{ xs: 2, md: 3 }}
-      columns={{ xs: 4, sm: 8, md: 12 }}
-    >
-      {filteredProducts.map((product) => (
-        <Product key={product.id} product={product} />
-      ))}
-    </Grid>
+    <div style={{ display: "flex", padding: 5 }}>
+      <div className="filterBox">
+        <FilterSidebar />
+      </div>
+      <div className="productList">
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+    </div>
   );
 }
 

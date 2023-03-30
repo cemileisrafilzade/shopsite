@@ -18,8 +18,14 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import HeaderSearch from "../filters/HeaderSearch";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../context";
 
 export default function MainHeader() {
+  const { favIds } = useContext(AppContext);
+
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -43,6 +49,10 @@ export default function MainHeader() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleLogOut = () => {
+    navigate("/sign-in");
+    handleMenuClose();
+  };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -61,7 +71,7 @@ export default function MainHeader() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile Settings</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Log Out</MenuItem>
+      <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
     </Menu>
   );
 
@@ -83,8 +93,13 @@ export default function MainHeader() {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
+        <IconButton
+          onClick={() => navigate("/my-favs")}
+          size="large"
+          aria-label="show 4 new mails"
+          color="inherit"
+        >
+          <Badge badgeContent={favIds.length} color="error">
             <FavoriteIcon />
           </Badge>
         </IconButton>
@@ -119,7 +134,7 @@ export default function MainHeader() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+      <AppBar sx={{ padding: "10px" }} position="fixed">
         <Toolbar>
           <IconButton
             size="large"
@@ -142,42 +157,14 @@ export default function MainHeader() {
 
           <HeaderSearch />
 
-          {/* autocompleteeeee */}
-          {/* <Autocomplete
-            disablePortal
-            id="combo-box-demo"
-            options={products.map((product) => product.title)}
-            sx={{
-              margin: "5px",
-              color: "white",
-              width: "300px",
-              border: "1px solid white",
-              borderRadius: "5px",
-              padding: "0px",
-            }}
-            renderInput={(params) => (
-              <TextField
-                sx={{
-                  margin: "0px",
-                  color: "white",
-                  width: "300px",
-                  border: "1px solid white",
-                  borderRadius: "5px",
-                  padding: "0px",
-                }}
-                {...params}
-                title="Search product name..."
-              />
-            )}
-          /> */}
-
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <IconButton
               size="large"
               aria-label="show 4 new mails"
               color="inherit"
+              onClick={() => navigate("/my-favs")}
             >
-              <Badge badgeContent={4} color="error">
+              <Badge badgeContent={favIds.length} color="error">
                 <FavoriteIcon />
               </Badge>
             </IconButton>

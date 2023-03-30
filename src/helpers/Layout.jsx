@@ -6,14 +6,15 @@ import MainHeader from "../components/header/Main";
 
 export default function Layout({ children }) {
   return (
-    <Grid container columns={16}>
-      <Grid item xs={16} sx={{ marginBottom: 5 }}>
+    <Grid
+      container
+      columns={16}
+      // gap={12}
+    >
+      <Grid item xs={16}>
         <MainHeader />
       </Grid>
-      <Grid item xs={3} sx={{ padding: "60px 15px" }}>
-        <FilterSidebar />
-      </Grid>
-      <Grid item xs={13}>
+      <Grid item xs={16}>
         {children}
       </Grid>
       <Grid item xs={16}>

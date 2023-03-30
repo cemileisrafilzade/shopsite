@@ -4,6 +4,8 @@ export const AppContextProvider = (props) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [loading, setLoading] = useState(false);
+  const [favIds, setFavIds] = useState([]);
+
   const fetchData = () => {
     setLoading(true);
     fetch("https://fakestoreapi.com/products")
@@ -26,6 +28,8 @@ export const AppContextProvider = (props) => {
     filteredProducts,
     setFilteredProducts,
     loading,
+    favIds,
+    setFavIds,
   };
   return (
     <AppContext.Provider value={contextValues}>

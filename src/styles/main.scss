@@ -1,10 +1,11 @@
 .container {
   background-color: rgba(245, 245, 245, 1);
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
   padding: 20px;
+  flex-direction: column;
+
   .productInfo {
     border-radius: 5px;
     width: 80%;
@@ -29,11 +30,53 @@
       object-fit: contain;
     }
     .content {
-      h3 {
-        margin-right: 0;
-        // display: block;
-        // float: right;
-      }
+      position: relative;
     }
+  }
+}
+.productList {
+  padding: 60px 15px;
+  width: 80%;
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.filterBox {
+  margin: 20px;
+  border-radius: 5px;
+  padding: 60px 15px;
+  background-color: white;
+  width: 20%;
+  -webkit-box-shadow: 5px 1px 5px 0px rgba(230, 230, 230, 1);
+  -moz-box-shadow: 5px 1px 5px 0px rgba(230, 230, 230, 1);
+  box-shadow: 5px 1px 5px 0px rgba(230, 230, 230, 1);
+}
+
+.myFavs {
+  padding: 20px;
+  min-height: 100vh;
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto auto auto auto;
+  h1 {
+    background-color: #fff;
+    margin: 15px;
+  }
+}
+.links {
+  margin-bottom: 25px;
+  // margin-top: 80px;
+  background-color: #fff;
+  padding: 15px;
+  width: 100%;
+  a {
+    color: #363636;
+    text-decoration: none;
+    :active {
+      color: red;
+    }
+  }
+  .active {
+    color: brown;
   }
 }
