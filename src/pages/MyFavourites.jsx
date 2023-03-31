@@ -9,7 +9,7 @@ export default function MyFavourites() {
   const { favIds, products } = useContext(AppContext);
   const favProducts = products.filter((product) => favIds.includes(product.id));
   // console.log(favIds);
-  console.log(favProducts);
+  // console.log(favProducts);
   return (
     <div className="container">
       <div className="links">
@@ -19,7 +19,7 @@ export default function MyFavourites() {
         </Breadcrumbs>
       </div>
       <div className="myFavs">
-        {favProducts.map((product) => (
+        {favProducts?.map((product) => (
           <ProductCard product={product} />
         ))}
       </div>

@@ -63,12 +63,18 @@ function ProductCard({ product }) {
     }
   };
   useEffect(() => {
-    // Retrieve the favIds array from local storage
     const storedFavIds = JSON.parse(localStorage.getItem("favIds"));
     if (storedFavIds) {
       setFavIds(storedFavIds);
     }
   }, []);
+  // const isFav = favIds.some((id) => {
+  //   if (id === product.id) {
+  //     return true;
+  //   }
+  //   return false;
+  // });
+  console.log(favIds.some((id) => id === 1));
   return (
     <Card
       onClick={() => navigate(`product-info/${product.id}`)}
@@ -98,7 +104,9 @@ function ProductCard({ product }) {
               aria-label="Like minimal photography"
               size="md"
               variant="solid"
-              color={fav ? "error" : "default"}
+              color={
+                favIds.some((id) => id === product.id) ? "error" : "default"
+              }
               sx={{
                 position: "absolute",
                 zIndex: 2,
