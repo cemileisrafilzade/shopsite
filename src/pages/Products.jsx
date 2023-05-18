@@ -1,5 +1,5 @@
-import { Skeleton } from "@mui/material";
-import React, { useContext, useEffect } from "react";
+// import { Skeleton } from "@mui/material";
+import React, { useContext } from "react";
 import FilterSidebar from "../components/FilterSidebar";
 import ProductCard from "../components/productCard";
 import { AppContext } from "../context";

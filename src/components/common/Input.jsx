@@ -1,13 +1,12 @@
 import {
-  Checkbox,
   FormControl,
   InputLabel,
   MenuItem,
   OutlinedInput,
   Select,
 } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
-import { AppContext } from "../../context";
+// import React, { useContext, useEffect, useState } from "react";
+// import { AppContext } from "../../context";
 
 export default function Input({ label, content, handleChange }) {
   return (

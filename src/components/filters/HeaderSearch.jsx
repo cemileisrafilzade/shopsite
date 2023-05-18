@@ -1,9 +1,6 @@
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
-import InputBase from "@mui/material/InputBase";
 
-import SearchIcon from "@mui/icons-material/Search";
-import { Autocomplete, Box, TextField } from "@mui/material";
+import { Autocomplete, TextField } from "@mui/material";
 import { useContext } from "react";
 import { AppContext } from "../../context";
 import { useNavigate } from "react-router-dom";

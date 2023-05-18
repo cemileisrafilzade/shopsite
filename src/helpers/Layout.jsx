@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import React from "react";
-import FilterSidebar from "../components/FilterSidebar";
-import Footer from "../components/Footer";
+// import FilterSidebar from "../components/FilterSidebar";
+// import Footer from "../components/Footer";
 import MainHeader from "../components/header/Main";
 
 export default function Layout({ children }) {

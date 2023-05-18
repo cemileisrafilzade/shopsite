@@ -1,6 +1,5 @@
-import { CheckBox, Visibility, VisibilityOff } from "@mui/icons-material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
-  Breadcrumbs,
   Button,
   Checkbox,
   FormControl,
@@ -12,7 +11,7 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AppContext } from "../context";
 
 export default function AuthForm() {
@@ -28,8 +27,9 @@ export default function AuthForm() {
   const navigate = useNavigate();
   const handleSubmit = () => {
     navigate("/");
-    console.log(registered);
-    console.log("logged in");
+    // if(registired){
+
+    // }
   };
   return (
     <form onSubmit={handleSubmit} action="">

@@ -9,8 +9,7 @@ export default function ByFavCount() {
   ];
   const label = "favourite count";
 
-  const { products, setFilteredProducts, filteredProducts } =
-    useContext(AppContext);
+  const { products, setFilteredProducts } = useContext(AppContext);
   const handleChange = (event) => {
     let price = event.target.value;
     let filtered = [];

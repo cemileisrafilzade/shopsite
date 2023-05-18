@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { AppContext } from "../../context";
 import Input from "../common/Input";
 
 export default function FilterByPrices() {
-  const { products, setFilteredProducts, filteredProducts } =
-    useContext(AppContext);
+  const { products, setFilteredProducts } = useContext(AppContext);
 
   const content = [
     { id: 1, value: 100, text: "0 - 100 $" },
