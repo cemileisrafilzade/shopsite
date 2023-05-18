@@ -27,25 +27,28 @@ export default function FilterByCategories() {
     useContext(AppContext);
   const [catName, setCatName] = useState([]);
 
-  const handleChange = useCallback((event) => {
-    const {
-      target: { value },
-    } = event;
-    if (filteredProducts.length) {
-      setFilteredProducts(
-        products.filter((product) =>
-          event.target.value.includes(product.category)
-        )
-      );
-    }
-    setCatName(typeof value === "string" ? value.split(",") : value);
-  });
+  const handleChange = useCallback(
+    (event) => {
+      const {
+        target: { value },
+      } = event;
+      if (filteredProducts.length) {
+        setFilteredProducts(
+          products.filter((product) =>
+            event.target.value.includes(product.category)
+          )
+        );
+      }
+      setCatName(typeof value === "string" ? value.split(",") : value);
+    },
+    [1]
+  );
 
   useEffect(() => {
     if (!filteredProducts.length) {
       setFilteredProducts(products);
     }
-  }, [handleChange]);
+  }, [filteredProducts.length, setFilteredProducts, products, handleChange]);
 
   const [categories, setCategories] = useState([]);
 
