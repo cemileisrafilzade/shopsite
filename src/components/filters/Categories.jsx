@@ -45,7 +45,7 @@ export default function FilterByCategories() {
     if (!filteredProducts.length) {
       setFilteredProducts(products);
     }
-  }, [handleChange]);
+  }, [handleChange, filteredProducts.length, products]);
 
   const [categories, setCategories] = useState([]);
 

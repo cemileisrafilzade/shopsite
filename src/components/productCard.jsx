@@ -70,7 +70,7 @@ function ProductCard({ product }) {
     if (storedFavIds) {
       setFavIds(storedFavIds);
     }
-  }, []);
+  });
   const location = useLocation();
 
   // console.log(favIds.some((id) => id === 1));
