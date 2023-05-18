@@ -8,15 +8,15 @@ import { useNavigate } from "react-router-dom";
 export default function HeaderSearch() {
   const { products } = useContext(AppContext);
   const navigate = useNavigate();
-  let productId;
+  let productId = null;
   const searchProduct = (e) => {
     products.some((product) => {
       if (product.title === e.target.value) {
-        productId = product.id;
+        return (productId = product.id);
       }
+      return false;
     });
 
-    console.log(productId);
     if (productId) {
       navigate(`product-info/${productId}`);
     }
