@@ -8,7 +8,7 @@ import {
   Select,
 } from "@mui/material";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { AppContext } from "../../context/index";
 
 const ITEM_HEIGHT = 48;
@@ -27,7 +27,7 @@ export default function FilterByCategories() {
     useContext(AppContext);
   const [catName, setCatName] = useState([]);
 
-  const handleChange = (event) => {
+  const handleChange = useCallback((event) => {
     const {
       target: { value },
     } = event;
@@ -39,13 +39,13 @@ export default function FilterByCategories() {
       );
     }
     setCatName(typeof value === "string" ? value.split(",") : value);
-  };
+  });
 
   useEffect(() => {
     if (!filteredProducts.length) {
       setFilteredProducts(products);
     }
-  }, [handleChange, filteredProducts.length, products, setFilteredProducts]);
+  }, [handleChange]);
 
   const [categories, setCategories] = useState([]);
 
