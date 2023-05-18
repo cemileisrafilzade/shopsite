@@ -16,12 +16,13 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import Slide from "@mui/material/Slide";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../context";
 
 function ProductCard({ product }) {
   const [rate, setRate] = useState(4);
   const [fav, setFav] = useState(false);
+
   const [state, setState] = React.useState({
     open: false,
     Transition: Slide,
@@ -39,9 +40,11 @@ function ProductCard({ product }) {
       open: false,
     });
   };
+
   const addFav = (e) => {
-    e.stopPropagation();
     setFav(!fav);
+    console.log(fav);
+    e.stopPropagation();
     if (!fav) {
       setState({
         open: true,
@@ -68,16 +71,12 @@ function ProductCard({ product }) {
       setFavIds(storedFavIds);
     }
   }, []);
-  // const isFav = favIds.some((id) => {
-  //   if (id === product.id) {
-  //     return true;
-  //   }
-  //   return false;
-  // });
-  console.log(favIds.some((id) => id === 1));
+  const location = useLocation();
+
+  // console.log(favIds.some((id) => id === 1));
   return (
     <Card
-      onClick={() => navigate(`product-info/${product.id}`)}
+      onClick={() => navigate(`/product-info/${product.id}`)}
       xs={2}
       sm={4}
       md={4}
@@ -99,6 +98,7 @@ function ProductCard({ product }) {
               component="img"
               image={product.image}
             />
+
             <IconButton
               onClick={(e) => addFav(e)}
               aria-label="Like minimal photography"
@@ -151,14 +151,18 @@ function ProductCard({ product }) {
               Add to card{" "}
             </Button>
           </CardContent>
-          <Snackbar
-            autoHideDuration={3000}
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            open={state.open}
-            onClose={handleClose}
-          >
-            <Alert>Added to your favourites</Alert>
-          </Snackbar>
+          {!location.pathname.includes("fav") ? (
+            <Snackbar
+              autoHideDuration={3000}
+              anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              open={state.open}
+              onClose={handleClose}
+            >
+              <Alert>Added to your favourites</Alert>
+            </Snackbar>
+          ) : (
+            ""
+          )}
         </>
       )}
     </Card>

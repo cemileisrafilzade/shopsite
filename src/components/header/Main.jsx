@@ -48,7 +48,10 @@ export default function MainHeader() {
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
+  const handleSettings = () => {
+    navigate("/profile-settings");
+    handleMenuClose();
+  };
   const handleLogOut = () => {
     navigate("/sign-in");
     handleMenuClose();
@@ -70,7 +73,7 @@ export default function MainHeader() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile Settings</MenuItem>
+      <MenuItem onClick={handleSettings}>Profile Settings</MenuItem>
       <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
     </Menu>
   );

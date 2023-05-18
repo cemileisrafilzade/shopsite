@@ -9,14 +9,16 @@ import FilterByRating from "./filters/ByRating";
 import FilterByCategories from "./filters/Categories";
 
 export default function FilterSidebar() {
+  const [clear, setClear] = useState(false);
   const { setFilteredProducts, products } = useContext(AppContext);
   const clearFilters = () => {
     setFilteredProducts(products);
+    setClear(true);
   };
   return (
     <div>
       <FilterByCategories />
-      <FilterByPrices />
+      <FilterByPrices clear />
       <FilterByRating />
       <ByFavCount />
       <Button

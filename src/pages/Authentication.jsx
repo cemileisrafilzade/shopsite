@@ -1,13 +1,18 @@
 import React from "react";
+import AuthForm from "../components/AuthForm";
+import { Breadcrumbs } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function Authentication() {
   return (
     <div>
-      <h1>Authentication</h1>
-      <h1>Authentication</h1>
-      <h1>Authentication</h1>
-      <h1>Authentication</h1>
-      <h1>Authentication</h1>
+      <div className="links">
+        <Breadcrumbs>
+          <Link to={"/"}>All products</Link>
+          <Link className="active">Authentication</Link>
+        </Breadcrumbs>
+      </div>
+      <AuthForm />
     </div>
   );
 }

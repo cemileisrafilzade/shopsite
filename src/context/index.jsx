@@ -5,15 +5,26 @@ export const AppContextProvider = (props) => {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [loading, setLoading] = useState(false);
   const [favIds, setFavIds] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const fetchData = () => {
     setLoading(true);
+    // fetching all products
     fetch("https://fakestoreapi.com/products")
       .then((response) => {
         return response.json();
       })
       .then((data) => {
         setProducts(data);
+      });
+
+    // fetching all users
+    fetch("https://fakestoreapi.com/users")
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setUsers(data);
       });
   };
 
@@ -30,6 +41,7 @@ export const AppContextProvider = (props) => {
     loading,
     favIds,
     setFavIds,
+    users,
   };
   return (
     <AppContext.Provider value={contextValues}>
