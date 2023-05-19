@@ -57,14 +57,14 @@ export default function FilterByCategories() {
 
       setCatName(typeof value === "string" ? value.split(",") : value);
     },
-    [filteredProducts, products]
+    [filteredProducts, products, setFilteredProducts]
   );
 
   useEffect(() => {
     if (!filteredProducts.length) {
       setFilteredProducts(products);
     }
-  }, [products]);
+  }, [products, filteredProducts.length, setFilteredProducts]);
 
   const [categories, setCategories] = useState([]);
 
