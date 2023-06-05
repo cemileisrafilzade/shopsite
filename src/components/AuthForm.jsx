@@ -9,50 +9,71 @@ import {
   InputLabel,
   OutlinedInput,
   TextField,
+  Typography,
 } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AppContext } from "../context";
-
+// import { AppContext } from "../context";
+import { auth, signInAuth, signUp } from "../firebase/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 export default function AuthForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [registered, setRegistered] = useState(false);
-  const { users } = useContext(AppContext);
+  // const { users } = useContext(AppContext);
+  const [user, loading, error] = useAuthState(auth);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  console.log(users.map((user) => user.username));
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
   const navigate = useNavigate();
-  const handleSubmit = () => {
-    navigate("/");
-    // if(registired){
 
-    // }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!registered) {
+      if (password !== password2) {
+        setErrorMsg("Password should match");
+      } else {
+        const result = await signUp(email, password);
+        console.log(result);
+        if (result.error) {
+          setErrorMsg(result.error);
+        }
+      }
+    } else if (registered) {
+      const res = await signInAuth(email, password);
+      if (res.error) {
+        setErrorMsg(res.error);
+      }
+    }
   };
+  useEffect(() => {
+    if (loading) return;
+    if (user) navigate("/");
+  }, [user, loading]);
   return (
     <form onSubmit={handleSubmit} action="">
       <div className="inputWrapper">
         <h1>{registered ? "Login" : "Registiration"}</h1>
+        {errorMsg && (
+          <Typography sx={{ color: "error.main" }}>{errorMsg}</Typography>
+        )}
         {!registered ? (
           <>
             <TextField
-              required
-              id="outlined-basic"
-              label="fisrtname"
-              sx={{ m: 1 }}
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
+              autoComplete="off"
               required
               sx={{ m: 1 }}
               variant="outlined"
               fullWidth
-              label="lastname"
+              label="fullname"
             />
             <TextField
+              autoComplete="off"
               required
               sx={{ m: 1 }}
               variant="outlined"
@@ -60,39 +81,58 @@ export default function AuthForm() {
               label="phone"
               type="number"
             />
-            <TextField
-              required
-              sx={{ m: 1 }}
-              variant="outlined"
-              fullWidth
-              label="city"
-            />
-            <TextField
-              required
-              sx={{ m: 1 }}
-              variant="outlined"
-              fullWidth
-              label="email"
-              type="email"
-            />
+            {/* <TextField
+                autoComplete="off"
+                required
+                sx={{ m: 1 }}
+                variant="outlined"
+                fullWidth
+                label="city"
+              /> */}
+            {/* <TextField
+                autoComplete="off"
+                required
+                value={email}
+                sx={{ m: 1 }}
+                variant="outlined"
+                fullWidth
+                label="email"
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+              /> */}
           </>
         ) : (
           <></>
         )}
+        {/* <TextField
+            autoComplete="off"
+            required
+            sx={{ m: 1 }}
+            variant="outlined"
+            fullWidth
+            label="username"
+          /> */}
+        {/* <TextField autoComplete="off" required variant="outlined" label="password" /> */}
         <TextField
+          autoComplete="off"
           required
+          value={email}
           sx={{ m: 1 }}
           variant="outlined"
           fullWidth
-          label="username"
+          label="email"
+          type="email"
+          onChange={(e) => setEmail(e.target.value)}
         />
-        {/* <TextField required variant="outlined" label="password" /> */}
         <FormControl sx={{ m: 1 }} variant="outlined" fullWidth>
           <InputLabel htmlFor="outlined-adornment-password">
             Password
           </InputLabel>
           <OutlinedInput
+            autoComplete="off"
+            value={password}
             id="outlined-adornment-password"
+            onChange={(e) => setPassword(e.target.value)}
             type={showPassword ? "text" : "password"}
             endAdornment={
               <InputAdornment position="end">
@@ -117,7 +157,11 @@ export default function AuthForm() {
               Confirm Password
             </InputLabel>
             <OutlinedInput
+              required
+              autoComplete="off"
               id="outlined-adornment-password"
+              value={password2}
+              onChange={(e) => setPassword2(e.target.value)}
               type={showPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">

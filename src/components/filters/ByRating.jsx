@@ -52,27 +52,27 @@ export default function FilterByRating() {
   const handleChange = (e) => {
     let rate = e.target.value;
     let filtered = products;
-    if (rate === 1) {
-      filtered = products?.filter(
-        (product) => Math.round(product.rating.rate) === 1
-      );
-    } else if (rate === 2) {
-      filtered = products?.filter(
-        (product) => Math.round(product.rating.rate) === 2
-      );
-    } else if (rate === 3) {
-      filtered = products?.filter(
-        (product) => Math.round(product.rating.rate) === 3
-      );
-    } else if (rate === 4) {
-      filtered = products?.filter(
-        (product) => Math.round(product.rating.rate) === 4
-      );
-    } else if (rate === 5) {
-      filtered = products?.filter(
-        (product) => Math.round(product.rating.rate) === 5
-      );
-    }
+    // if (rate === 1) {
+    //   filtered = products?.filter(
+    //     (product) => Math.round(product.rating.rate) === 1
+    //   );
+    // } else if (rate === 2) {
+    //   filtered = products?.filter(
+    //     (product) => Math.round(product.rating.rate) === 2
+    //   );
+    // } else if (rate === 3) {
+    //   filtered = products?.filter(
+    //     (product) => Math.round(product.rating.rate) === 3
+    //   );
+    // } else if (rate === 4) {
+    //   filtered = products?.filter(
+    //     (product) => Math.round(product.rating.rate) === 4
+    //   );
+    // } else if (rate === 5) {
+    //   filtered = products?.filter(
+    //     (product) => Math.round(product.rating.rate) === 5
+    //   );
+    // }
     setFilteredProducts(filtered);
   };
 

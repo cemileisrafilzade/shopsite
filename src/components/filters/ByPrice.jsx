@@ -6,9 +6,9 @@ export default function FilterByPrices() {
   const { products, setFilteredProducts } = useContext(AppContext);
 
   const content = [
-    { id: 1, value: 100, text: "0 - 100 $" },
-    { id: 2, value: 500, text: "100 - 500 $" },
-    { id: 3, value: 1000, text: "more than 500 $" },
+    { id: 1, value: 1, text: "0 - 100 $" },
+    { id: 2, value: 2, text: "100 - 500 $" },
+    { id: 3, value: 3, text: "more than 500 $" },
   ];
   const label = "price $";
   const handleChange = (event) => {

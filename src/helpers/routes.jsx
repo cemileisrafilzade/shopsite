@@ -5,6 +5,7 @@ import MyFavourites from "../pages/MyFavourites";
 import ProductInfo from "../pages/ProductInfo";
 import Products from "../pages/Products";
 import ProfileSettings from "../pages/ProfileSettings";
+import MyCart from "../pages/MyCart";
 
 const AllRoutes = () => {
   return (
@@ -14,6 +15,7 @@ const AllRoutes = () => {
       <Route exact path="/sign-in" element={<Authentication />} />
       <Route exact path="/profile-settings" element={<ProfileSettings />} />
       <Route exact path="/my-favs" element={<MyFavourites />} />
+      <Route exact path="my-cart" element={<MyCart />} />
     </Routes>
   );
 };

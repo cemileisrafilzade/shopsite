@@ -13,9 +13,11 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
 import HeaderSearch from "../filters/HeaderSearch";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context";
+import { auth, signOutAuth } from "../../firebase/firebase";
+import { useSelector } from "react-redux";
 
 export default function MainHeader() {
   const { favIds } = useContext(AppContext);
@@ -23,9 +25,9 @@ export default function MainHeader() {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -48,8 +50,10 @@ export default function MainHeader() {
     handleMenuClose();
   };
   const handleLogOut = () => {
-    navigate("/sign-in");
-    handleMenuClose();
+    signOutAuth(auth).then(() => {
+      navigate("/sign-in");
+      handleMenuClose();
+    });
   };
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -97,9 +101,13 @@ export default function MainHeader() {
           aria-label="show 4 new mails"
           color="inherit"
         >
-          <Badge badgeContent={favIds.length} color="error">
+          {auth.currentUser ? (
+            <Badge badgeContent={favIds.length} color="error">
+              <FavoriteIcon />
+            </Badge>
+          ) : (
             <FavoriteIcon />
-          </Badge>
+          )}
         </IconButton>
         <p>Messages</p>
       </MenuItem>
@@ -109,9 +117,13 @@ export default function MainHeader() {
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          {auth.currentUser ? (
+            <Badge badgeContent={totalQuantity} color="error">
+              <ShoppingCartIcon />
+            </Badge>
+          ) : (
             <ShoppingCartIcon />
-          </Badge>
+          )}
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
@@ -162,18 +174,27 @@ export default function MainHeader() {
               color="inherit"
               onClick={() => navigate("/my-favs")}
             >
-              <Badge badgeContent={favIds.length} color="error">
+              {auth.currentUser ? (
+                <Badge badgeContent={favIds.length} color="error">
+                  <FavoriteIcon />
+                </Badge>
+              ) : (
                 <FavoriteIcon />
-              </Badge>
+              )}
             </IconButton>
             <IconButton
               size="large"
               aria-label="show 17 new notifications"
               color="inherit"
+              onClick={() => navigate("/my-cart")}
             >
-              <Badge badgeContent={17} color="error">
+              {auth.currentUser ? (
+                <Badge badgeContent={totalQuantity} color="error">
+                  <ShoppingCartIcon />
+                </Badge>
+              ) : (
                 <ShoppingCartIcon />
-              </Badge>
+              )}
             </IconButton>
             <IconButton
               size="large"

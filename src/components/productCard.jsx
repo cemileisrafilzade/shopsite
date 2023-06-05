@@ -18,12 +18,35 @@ import Slide from "@mui/material/Slide";
 import AddShoppingCartOutlinedIcon from "@mui/icons-material/AddShoppingCartOutlined";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../context";
+import { useDispatch } from "react-redux";
+import { cartActions } from "../redux/slices/cartSlice";
 
 function ProductCard({ product }) {
+  const dispatch = useDispatch();
+
+  const addToCart = (e) => {
+    e.stopPropagation();
+    setCartState({ open: true });
+    dispatch(
+      cartActions.addItem({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        rate: rate,
+        rateCount: product.rating.count,
+      })
+    );
+  };
+
   const [rate, setRate] = useState(4);
   const [fav, setFav] = useState(false);
 
-  const [state, setState] = React.useState({
+  const [favState, setFavState] = React.useState({
+    open: false,
+    Transition: Slide,
+  });
+  const [cartState, setCartState] = React.useState({
     open: false,
     Transition: Slide,
   });
@@ -34,19 +57,23 @@ function ProductCard({ product }) {
     setRate(Math.round(product.rating.rate));
   }, [product]);
 
-  const handleClose = () => {
-    setState({
-      ...state,
+  const handleCloseSnackBar = () => {
+    setFavState({
+      ...favState,
+      open: false,
+    });
+    setCartState({
+      ...cartState,
       open: false,
     });
   };
 
   const addFav = (e) => {
     setFav(!fav);
-    console.log(fav);
+    // console.log(fav);
     e.stopPropagation();
     if (!fav) {
-      setState({
+      setFavState({
         open: true,
       });
       if (!favIds.includes(product.id)) {
@@ -80,7 +107,12 @@ function ProductCard({ product }) {
       xs={2}
       sm={4}
       md={4}
-      sx={{ width: 325, m: 2, cursor: "pointer" }}
+      sx={{
+        width: 325,
+        m: 2,
+        height: 400,
+        cursor: "pointer",
+      }}
     >
       {loading ? (
         <>
@@ -120,7 +152,17 @@ function ProductCard({ product }) {
             </IconButton>
           </CardActionArea>
           <CardContent key={product.id}>
-            {product.title}
+            <span
+              style={{
+                display: "block",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+                width: "100%",
+              }}
+            >
+              {product.title}
+            </span>
             <span
               style={{
                 display: "flex",
@@ -141,11 +183,12 @@ function ProductCard({ product }) {
                 <p>{product.rating.count}</p>
               </span>
             </span>
-            <Divider />
+            {/* <Divider /> */}
             <Button
               sx={{ m: 1, float: "right" }}
               variant="outlined"
               endIcon={<AddShoppingCartOutlinedIcon />}
+              onClick={addToCart}
             >
               {" "}
               Add to card{" "}
@@ -153,10 +196,10 @@ function ProductCard({ product }) {
           </CardContent>
           {!location.pathname.includes("fav") ? (
             <Snackbar
-              autoHideDuration={3000}
+              autoHideDuration={2000}
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-              open={state.open}
-              onClose={handleClose}
+              open={favState.open}
+              onClose={handleCloseSnackBar}
             >
               <Alert>Added to your favourites</Alert>
             </Snackbar>
@@ -165,6 +208,14 @@ function ProductCard({ product }) {
           )}
         </>
       )}
+      <Snackbar
+        autoHideDuration={2000}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        open={cartState.open}
+        onClose={handleCloseSnackBar}
+      >
+        <Alert>Added to your Cart</Alert>
+      </Snackbar>
     </Card>
   );
 }
